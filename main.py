@@ -14,8 +14,8 @@ def process_chunk(chunk):
     chunk.columns = chunk.columns.str.strip()
 
     # Replace empty strings with NaN and then fill NaN with 0
-    chunk[CREDIT_AMOUNT_CLM] = chunk[CREDIT_AMOUNT_CLM].replace('', 0).astype(float)
-    chunk[DEBIT_AMOUNT_CLM] = chunk[DEBIT_AMOUNT_CLM].replace('', 0).astype(float)
+    chunk[CREDIT_AMOUNT_CLM] = chunk[CREDIT_AMOUNT_CLM].str.replace(',', '').astype(float)
+    chunk[DEBIT_AMOUNT_CLM] = chunk[DEBIT_AMOUNT_CLM].str.replace(',', '').astype(float)
 
     credit_amount = chunk[CREDIT_AMOUNT_CLM].sum()
     debit_amount = chunk[DEBIT_AMOUNT_CLM].sum()
@@ -56,7 +56,6 @@ def analyse_payment_pattern(file_path):
         return
 
     print(f'File path: {file_path}')
-
 
     chunk_size = 100
 
@@ -131,7 +130,7 @@ if __name__ == '__main__':
     # args = parser.parse_args()
 
     # analyse_payment_pattern(args.file_path)
-    file_path = "2022-jul.csv"
+    file_path = "output.csv"
     analyse_payment_pattern(file_path)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
